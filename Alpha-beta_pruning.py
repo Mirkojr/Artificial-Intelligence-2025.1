@@ -11,6 +11,7 @@ tree = {
     }
 
 alphabeta_log = []
+visited_nodes = 0
 def alphabeta(node, alpha, beta, is_maximazing):
     global visited_nodes
     visited_nodes += 1
@@ -38,5 +39,22 @@ def alphabeta(node, alpha, beta, is_maximazing):
         else:
             best = min(best, val)
             beta = min(beta, best)
+        
+        # Verifica se ocorre poda
+        if beta <= alpha:
+            prune = True
+            break
 
+    alphabeta_log.append((node, values, best, alpha, beta, prune))
+    return best
+
+# executing the algorithm beginning from the root node "A"
+result = alphabeta("A", float('-inf'), float('inf'), True)
+
+# printing the result
+print("Result:", result)
+print("Visited nodes:", visited_nodes)
+print("\nAlpha-Beta Log:")
+for entry in alphabeta_log:
+    print(entry)
     
